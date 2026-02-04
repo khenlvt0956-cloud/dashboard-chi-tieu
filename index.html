@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dashboard Chi Tiêu Học Sinh</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    .container {
+      display: flex;
+      gap: 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+    .box {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      flex: 1;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+    }
+    button {
+      background: #4f7cff;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    canvas {
+      max-width: 100%;
+    }
+    @media (max-width: 700px) {
+      .container {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<h1>Dashboard theo dõi chi tiêu</h1>
+
+<div class="container">
+  <!-- Nhập dữ liệu -->
+  <div class="box">
+    <h3>Nhập chi tiêu</h3>
+    <input type="number" id="amount" placeholder="Số tiền (VNĐ)">
+    <select id="category">
+      <option>Ăn uống</option>
+      <option>Học tập</option>
+      <option>Giải trí</option>
+      <option>Khác</option>
+    </select>
+    <button onclick="addExpense()">Thêm chi tiêu</button>
+  </div>
+
+  <!-- Biểu đồ -->
+  <div class="box">
+    <h3>Biểu đồ chi tiêu</h3>
+    <canvas id="chart"></canvas>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const data = {
+    "Ăn uống": 0,
+    "Học tập": 0,
+    "Giải trí": 0,
+    "Khác": 0
+  };
+
+  const ctx = document.getElementById("chart");
+  const chart = new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: Object.keys(data),
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard Chi Tiêu Học Sinh</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6fb;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+      display: flex;
+      gap: 20px;
+    }
+    .box {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      flex: 1;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+    }
+    button {
+      background: #4f7cff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    @media (max-width: 700px) {
+      .container {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<h1>Dashboard theo dõi chi tiêu</h1>
+
+<div class="container">
+  <div class="box">
+    <h3>Nhập chi tiêu</h3>
+    <input type="number" id="amount" placeholder="Số tiền (VNĐ)">
+    <select id="category">
+      <option value="Ăn uống">Ăn uống</option>
+      <option value="Học tập">Học tập</option>
+      <option value="Giải trí">Giải trí</option>
+      <option value="KHÁC">KHÁC</option>
+    </select>
+    <button onclick="addExpense()">Thêm chi tiêu</button>
+  </div>
+
+  <div class="box">
+    <h3>Biểu đồ chi tiêu</h3>
+    <canvas id="chart"></canvas>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const categories = ["Ăn uống", "Học tập", "Giải trí", "KHÁC"];
+  const expenses = {
+    "Ăn uống": 0,
+    "Học tập": 0,
+    "Giải trí": 0,
+    "KHÁC": 0
+  };
+
+  const ctx = document.getElementById("chart").getContext("2d");
+  const chart = new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: categories,
+      datasets: [{
+        label: "Số tiền (VNĐ)",
+        data: categories.map(c => expenses[c]),
+        backgroundColor: ["#4caf50", "#2196f3", "#ff9800", "#9e9e9e"]
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+  function addExpense() {
+    const amount = Number(document.getElementById("amount").value);
+    const category = document.getElementById("category").value;
+
+    if (amount <= 0) return;
+
+    expenses[category] += amount;
+
+    chart.data.datasets[0].data = categories.map(c => expenses[c]);
+    chart.update();
+
+    document.getElementById("amount").value = "";
+  }
+</script>
+
+</body>
+</html>
